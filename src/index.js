@@ -4,9 +4,11 @@ import dotenv from "dotenv";
 import { createFAQs } from "./controller/createFAQs.js";
 import { PrismaClient } from "@prisma/client";
 import { getFAQs } from "./controller/getFAQs.js";
+import Redis from "ioredis";
 
 const app = express();
 export const prisma = new PrismaClient();
+export const redis = new Redis();
 dotenv.config();
 app.use(cors());
 app.use(express.json());

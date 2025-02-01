@@ -1,10 +1,21 @@
-import { prisma } from "../index.js";
-import { translateText } from "../util/translateTexts.js";
+import { prisma, redis } from "../index.js";
 
 export const getFAQs = async (req, res) => {
    try {
       const { lang } = req.query;
       const targetLang = lang === "hi" ? "hi" : lang === "fr" ? "fr" : "en";
+      const redisKey = `faqs_${targetLang}`;
+
+      const cachedFAQs = await redis.get(redisKey);
+      if (cachedFAQs) {
+         return res.status(200).json({
+            success: true,
+            message: "FAQs fetched from cache",
+            lang,
+            faqs: JSON.parse(cachedFAQs),
+         });
+      }
+
       const faqs = await prisma.fAQ.findMany({
          select: {
             id: true,
@@ -22,6 +33,8 @@ export const getFAQs = async (req, res) => {
             message: "No FAQs found",
          });
       }
+
+      await redis.set(redisKey, JSON.stringify(faqs), "EX", 3600);
 
       return res.status(200).json({
          success: true,

@@ -1,4 +1,4 @@
-import { prisma } from "../index.js";
+import { prisma, redis } from "../index.js";
 import { translateText } from "../util/translateTexts.js";
 
 export const createFAQs = async (req, res) => {
@@ -50,6 +50,12 @@ export const createFAQs = async (req, res) => {
             success: false,
             message: "Internal server error",
             error: "FAQ creation failed",
+         });
+         
+         await redis.keys("faqs_*").then((keys) => {
+            if (keys.length > 0) {
+               redis.del(...keys);
+            }
          });
 
       return res.status(200).json({
