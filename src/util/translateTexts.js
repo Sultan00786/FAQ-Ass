@@ -16,6 +16,4 @@ export async function translateText(text, targetLang) {
          error: error.message || error,
       };
    }
-
-   return response;
 }
