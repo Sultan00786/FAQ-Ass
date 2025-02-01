@@ -8,7 +8,10 @@ import Redis from "ioredis";
 
 const app = express();
 export const prisma = new PrismaClient();
-export const redis = new Redis();
+export const redis = new Redis({
+   host: process.env.REDIS_HOST || "redis",
+   port: process.env.REDIS_PORT || 6379,
+ });
 dotenv.config();
 app.use(cors());
 app.use(express.json());
