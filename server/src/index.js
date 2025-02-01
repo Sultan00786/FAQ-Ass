@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { createFAQs } from "./controller/createFAQs.js";
 import { PrismaClient } from "@prisma/client";
+import { getFAQs } from "./controller/getFAQs.js";
 
 const app = express();
 export const prisma = new PrismaClient();
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/faqs", createFAQs);
+app.get("/faqs", getFAQs);
 
 app.listen(process.env.PORT, () =>
    console.log(`Server running on port ${process.env.PORT}`)
