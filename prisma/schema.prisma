@@ -21,4 +21,6 @@ model FAQ {
   answer_hi      String?
   question_fr    String?
   answer_fr      String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime       
 }
