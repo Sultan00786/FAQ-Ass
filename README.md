@@ -1,6 +1,8 @@
 # FAQ Management System
 
-This project is a FAQ Management System built using Node.js, Express, Prisma, and Docker. It allows you to store FAQs with questions and answers, and supports language-specific translations for each FAQ. The system uses Redis for caching and Google Cloud Translate for translation services.
+This project is a FAQ Management System built using Node.js, Express, Prisma, and Docker. It allows a multilingual FAQ service where users can create and fetch FAQs in three languages: English (en), Hindi (hi), and French (fr) using the Google Translation API. The application supports language-based FAQ retrieval, allowing users to specify their preferred language when making requests.
+
+To enhance performance and reduce redundant API calls, Redis is implemented for caching frequently requested FAQs. This ensures faster response times for repeated queries. The application is containerized using Docker for seamless deployment and scalability.
 
 ## Prerequisites
 
